@@ -1,6 +1,8 @@
-FrontEnd User Stories
+ # This is the Developmental Frontend page for NFT Brawl 
 
-- Web3Modal to log in using wallet
+ FrontEnd User Stories
+
+--- Web3Modal to log in using wallet (*In Progress*)
 
 --- HomePage
     - "Catacomb" style select between all available NFTs

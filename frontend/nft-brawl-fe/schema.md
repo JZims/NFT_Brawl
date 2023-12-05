@@ -13,4 +13,4 @@ NFTStats
     tokenId: number, 
     totalXp: number,
     level: number
-}
+}  
