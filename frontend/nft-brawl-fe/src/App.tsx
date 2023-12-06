@@ -7,8 +7,6 @@ import { arbitrum, mainnet } from 'viem/chains'
 
 const projectId = (import.meta.env.VITE_PROJECT_ID)
 
-console.log(import.meta.env.MODE)
-console.log(projectId)
 
 const metadata = {
   name: 'Web3Modal',
@@ -35,7 +33,7 @@ function App() {
           count is {count}
         </button>
       </div>
-      <ConnectButton> WalletConnect Lol </ConnectButton>
+      <ConnectButton/>
     </WagmiConfig> 
   )
 }
