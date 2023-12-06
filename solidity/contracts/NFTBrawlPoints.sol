@@ -18,7 +18,7 @@ import "./interfaces/INFTBrawlPoints.sol";
 
 contract NFTBrawlPoints is INFTBrawlPoints, ERC20Burnable, Ownable {
     /// @notice Mapping of addresses that are authorized to perform certain operations.
-    mapping(address => bool) public swAuth;
+    mapping(address => bool) public authList;
 
     /// @param _name The name of the token.
     /// @param _symbol The symbol of the token.
@@ -30,7 +30,7 @@ contract NFTBrawlPoints is INFTBrawlPoints, ERC20Burnable, Ownable {
     /// @dev Throws if called by an unauthorized address
     modifier onlyAuthorized() {
         require(
-            swAuth[msg.sender],
+            authList[msg.sender],
             "NFTBrawlPoints: caller is not authorized"
         );
         _;
@@ -48,20 +48,20 @@ contract NFTBrawlPoints is INFTBrawlPoints, ERC20Burnable, Ownable {
     /// @param _auth Address to be authorized.
     /// @dev Can only be called by the contract owner.
     function addAuthorized(address _auth) external onlyOwner {
-        swAuth[_auth] = true;
+        authList[_auth] = true;
     }
 
     /// @notice Removes an address from the authorized list.
     /// @param _auth Address to be de-authorized.
     /// @dev Can only be called by the contract owner.
     function removeAuthorized(address _auth) external onlyOwner {
-        swAuth[_auth] = false;
+        authList[_auth] = false;
     }
 
     /// @notice Checks if an address is authorized.
     /// @param _auth Address to check.
     /// @return isAuth Returns true if the address is authorized, false otherwise.
     function isAuthorized(address _auth) external view returns (bool) {
-        return swAuth[_auth];
+        return authList[_auth];
     }
 }
