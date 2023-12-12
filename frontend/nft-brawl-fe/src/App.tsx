@@ -1,42 +1,49 @@
 import { useState } from 'react'
 import './App.css'
-import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 import ConnectButton from './components/ConnectButton'
-import { WagmiConfig } from 'wagmi'
-import { arbitrum, mainnet } from 'viem/chains'
+import { useAccount } from 'wagmi'
 
-const projectId = (import.meta.env.VITE_PROJECT_ID)
 
-console.log(import.meta.env.MODE)
-console.log(projectId)
 
-const metadata = {
-  name: 'Web3Modal',
-  description: 'Web3Modal Example',
-  url: 'https://web3modal.com',
-  icons: ['https://avatars.githubusercontent.com/u/37784886']
-}
-
-const chains = [mainnet, arbitrum]
-const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-
-createWeb3Modal({ wagmiConfig, projectId, chains })
 
 function App() {
+ 
+  const {address, isConnecting, isDisconnected} = useAccount()
   const [count, setCount] = useState(0)
+  
+  const statusBar = () => {
+
+    if(isConnecting){
+      return <div>Connecting...</div>
+    }
+    else if (isDisconnected) {
+      return <div>Disconnected</div>
+    }
+    return <div>Address: {address}</div>
+  }
 
   return (
-
-   <WagmiConfig config={wagmiConfig} >
-
+    <>
+      
       <h1 className="text-xl">NFT Brawl</h1>
-      <div className="">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-      <ConnectButton> WalletConnect Lol </ConnectButton>
-    </WagmiConfig> 
+        <div className="">
+          <label htmlFor="counter"> count is {count} </label>
+          
+          <button className="border-2" id="counter" onClick={() => setCount((count) => count + 1)}>
+            Up
+          </button>
+          
+          <button className="border-2" id="counter" onClick={() => setCount((count) => count - 1)}>
+            Down
+          </button>
+        </div>
+         <br/>
+         <ConnectButton/>
+         <br/>
+         {statusBar()}
+    </>
+
+  
   )
 }
 
